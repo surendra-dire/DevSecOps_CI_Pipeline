@@ -16,4 +16,5 @@ jobs:
     
   sonar:
       uses: ./.github/workflows/sonar.yml
+      needs: build
       secrets: inherit
