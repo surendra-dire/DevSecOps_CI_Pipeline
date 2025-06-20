@@ -6,8 +6,13 @@ on:
 
 jobs:
   sonar:
-    runs-on: java_build
-    #needs: build  # Ensures Sonar runs after build succeeds
-    steps:
-      - name: SonarCloud Scan
-        run: mvn sonar:sonar -Dsonar.projectKey=ankit20000_DevSecops_Pipeline -Dsonar.organization=ankit20000 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
+     runs-on: ubuntu-latest
+       steps:
+         - name: =sonar scan
+          runs-on: java_build
+          needs: build
+          mvn sonar:sonar \
+         -Dsonar.projectKey=demo-org-test_petapp \
+         -Dsonar.organization=demo-org-test \
+         -Dsonar.host.url=https://sonarcloud.io \
+         -Dsonar.login=${{ secrets.SONAR_TOKEN }}
