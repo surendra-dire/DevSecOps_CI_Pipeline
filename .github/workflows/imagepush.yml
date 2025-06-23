@@ -29,6 +29,7 @@ jobs:
           repository: surendra-dire/GitOps-Helm-Argocd
           token: ${{ secrets.GITOPS_HELM-ARGOCD_REPO_TOKEN }}
           path: gitops
+          ref: main
 
       - name: Update Kubernetes manifest with new image tag
         run: |
