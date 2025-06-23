@@ -21,3 +21,21 @@ jobs:
 
       - name: Push Docker Image
         run: sudo docker push ${{ env.DOCKER_IMAGE }}
+
+      # Update manifest file
+      - name: Checkout GitOps repo (manifests)
+        uses: actions/checkout@v4
+        with:
+          repository: surendra-dire/GitOps-Helm-Argocd
+          token: ${{ secrets.GITOPS_HELM-ARGOCD_REPO_TOKEN }}
+          path: gitops
+
+      - name: Update Kubernetes manifest with new image tag
+        run: |
+          cd gitops/petapp
+          sed -i "s|image: surendradev101/petapp:.*|image: surendradev101/petapp:${{ github.sha }}|" deployment.yaml
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITOPS_HELM-ARGOCD_REPO_TOKEN }}@github.com/surendra-dire/GitOps-Helm-Argocd.git
+          git commit -am "Update image to ${{ github.sha }}"
+          git push
