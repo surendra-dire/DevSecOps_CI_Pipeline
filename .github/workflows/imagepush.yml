@@ -34,7 +34,7 @@ jobs:
       - name: Update Kubernetes manifest with new image tag
         run: |
           cd gitops/petapp
-          sed -i "s|image: surendradev101/petapp:.*|image: surendradev101/petapp:${{ github.sha }}|" deployment.yaml
+          sed -i "s|image: surendradev101/petapp:.*|image: surendradev101/petapp:${{ github.sha }}|" deployment.yml
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITOPS_HELM-ARGOCD_REPO_TOKEN }}@github.com/surendra-dire/GitOps-Helm-Argocd.git
